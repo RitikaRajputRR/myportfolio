@@ -1,4 +1,15 @@
 import Profile from "./assets/profile.jpeg"
+import {
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaJava,
+  FaPython,
+  FaReact,
+  FaGithub,
+} from "react-icons/fa";
+
+import { SiMysql, SiMongodb } from "react-icons/si";
 function Portfolio(){
 
     return(
@@ -80,18 +91,59 @@ function Portfolio(){
       <section className="skills"id="skills">
         <h2>Skills</h2>
         
-        <div className="skills-container">
-            <div className="skill-card">HTML</div>
-             <div className="skill-card">CSS</div>
-              <div className="skill-card">JAVASCRIPT</div>
-               <div className="skill-card">JAVA</div>
-                <div className="skill-card">PYTHON</div>
-                 <div className="skill-card">REACTJS</div>
-                  <div className="skill-card">MYSQL</div>
-                   <div className="skill-card">MONGODB</div>
-                    <div className="skill-card">GITHUB</div>
-                      <div className="skill-card">Responsive Design</div>
-        </div>
+       <div className="skills-container">
+
+  <div className="skill-card">
+    <FaHtml5 className="skill-icon html" />
+    <p>HTML</p>
+  </div>
+
+  <div className="skill-card">
+    <FaCss3Alt className="skill-icon css" />
+    <p>CSS</p>
+  </div>
+
+  <div className="skill-card">
+    <FaJs className="skill-icon js" />
+    <p>JavaScript</p>
+  </div>
+
+  <div className="skill-card">
+    <FaJava className="skill-icon java" />
+    <p>Java</p>
+  </div>
+
+  <div className="skill-card">
+    <FaPython className="skill-icon python" />
+    <p>Python</p>
+  </div>
+
+  <div className="skill-card">
+    <FaReact className="skill-icon react" />
+    <p>React JS</p>
+  </div>
+
+  <div className="skill-card">
+    <SiMysql className="skill-icon mysql" />
+    <p>MySQL</p>
+  </div>
+
+  <div className="skill-card">
+    <SiMongodb className="skill-icon mongo" />
+    <p>MongoDB</p>
+  </div>
+
+  <div className="skill-card">
+    <FaGithub className="skill-icon github" />
+    <p>GitHub</p>
+  </div>
+
+  <div className="skill-card">
+    💻
+    <p>Responsive Design</p>
+  </div>
+
+</div>
       </section>
 
       {/* Projects */}
