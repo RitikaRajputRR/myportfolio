@@ -1,3 +1,4 @@
+require("dotenv").config();
 const profileRoutes = require("./routes/profileRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const express = require("express");
@@ -13,8 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/contact", contactRoutes);
 app.use("/profile", profileRoutes);
 app.use("/admin", adminRoutes);
-mongoose
-  .connect("mongodb://127.0.0.1:27017/portfolio")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
   })
