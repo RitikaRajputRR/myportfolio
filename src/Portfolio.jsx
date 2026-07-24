@@ -1,4 +1,6 @@
-import Profile from "./assets/profile.jpeg"
+import { useEffect, useState } from "react";
+import Profile from "./assets/profile.jpeg";
+import toast from "react-hot-toast";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -11,6 +13,53 @@ import {
 
 import { SiMysql, SiMongodb } from "react-icons/si";
 function Portfolio(){
+  const [profile, setProfile] = useState({});
+  const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  message: "",
+});
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+useEffect(() => {
+  fetch("http://localhost:5000/profile")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setProfile(data);
+    })
+    .catch((err) => console.log(err));
+}, []);
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("http://localhost:5000/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    toast.success("Message Sent Successfully!");
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong!");}
+};
 
     return(
         <>
@@ -39,15 +88,9 @@ function Portfolio(){
   </div>
 
   <div className="hero-right">
-    <h1>Hi, I'm Ritika Rajput</h1>
-    <h2>Software Developer</h2>
-
-    <p>
-      MCA graduate with a passion for software development,
-      problem-solving, and building modern web applications.
-    </p>
-
-    
+   <h1>Hi, I'm {profile.name}</h1>
+<h2>{profile.role}</h2>
+<p>{profile.about}</p>
   <div className="social-links">
   <a href="/my_resume.pdf" className="btn" download>
     Download Resume
@@ -193,26 +236,43 @@ function Portfolio(){
         </div>
       </section>
 
-      {/* Contact */}
-      <section className="contact" id="contact">
-        <h2>Get in Touch</h2>
-       <p>
-    I'm actively looking for Software Developer and 
-    Frontend Developer job opportunities. 
-   If you have an opening or would like to connect, feel free to get in touch.
-  </p>
+  {/* Contact */}
+<section className="contact" id="contact">
+  <h2>Contact Me</h2>
 
-  <div className="contact-info">
-    <p>📧 ritika21520001@email.com</p>
-    <p>📱 +91 7898577587</p>
-    <p>📍 Chhattisgarh, India</p>
-  </div>
+<form onSubmit={handleSubmit}>
+  
+    <input
+  type="text"
+  name="name"
+  placeholder="Enter Your Name"
+  value={formData.name}
+  onChange={handleChange}
+  required/>
 
-  <button className="contact-btn">
-    <a href="mailto:ritika21520001@gmail.com" className="btn">Contact</a>
-  </button>
+   <input
+  type="email"
+  name="email"
+  placeholder="Enter Your Email"
+  value={formData.email}
+  onChange={handleChange}
+  required/>
 
-    </section>
+   <textarea
+  name="message"
+  placeholder="Enter Your Message"
+  value={formData.message}
+  onChange={handleChange}
+  required>
+
+</textarea>
+
+    <button type="submit">
+      Send Message
+    </button>
+  </form>
+</section> 
+      
 
       {/* Footer */}
      <footer className="footer">
