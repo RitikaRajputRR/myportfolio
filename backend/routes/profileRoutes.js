@@ -1,22 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const Profile = require("../models/Profile");
 
 router.get("/", async (req, res) => {
-  console.log("Profile route hit");
-  console.log("Collection:", Profile.collection.name);
-
   try {
+    console.log("Database:", mongoose.connection.name);
+    console.log("Collection:", Profile.collection.name);
+
+    const count = await Profile.countDocuments();
+    console.log("Total Documents:", count);
+
     const profile = await Profile.findOne();
-    console.log(profile);
+    console.log("Profile:", profile);
 
     res.json(profile);
   } catch (error) {
     console.log(error);
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 });
 
