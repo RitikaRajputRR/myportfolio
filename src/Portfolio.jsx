@@ -27,7 +27,7 @@ const handleChange = (e) => {
 };
 
 useEffect(() => {
-  fetch("http://localhost:5000/profile")
+  fetch("https://portfolio-x5c3.onrender.com/profile")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -40,7 +40,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const res = await fetch("http://localhost:5000/contact", {
+    const res = await fetch("https://portfolio-x5c3.onrender.com/contact", { 
       method: "POST",
       headers: {
         "Content-Type": "application/json",
