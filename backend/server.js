@@ -17,10 +17,12 @@ app.use("/admin", adminRoutes);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
-    console.log("Connected DB:", mongoose.connection.name);
+    console.log("DB Name:", mongoose.connection.name);
     console.log("Host:", mongoose.connection.host);
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log(err);
+  });
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
