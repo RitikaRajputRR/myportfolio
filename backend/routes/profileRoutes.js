@@ -14,6 +14,9 @@ router.get("/", async (req, res) => {
 
     const profile = await Profile.findOne();
     console.log("Profile:", profile);
+    
+    const allProfiles = await Profile.find();
+    console.log("All Profiles:", allProfiles);
 
     res.json(profile);
   } catch (error) {

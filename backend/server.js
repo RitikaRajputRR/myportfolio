@@ -13,14 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/contact", contactRoutes);
 app.use("/profile", profileRoutes);
-app.use("/admin", adminRoutes);mongoose.connect(process.env.MONGO_URI)
+app.use("/admin", adminRoutes);
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
     console.log("Connected DB:", mongoose.connection.name);
+    console.log("Host:", mongoose.connection.host);
   })
-  .catch((err) => {
-    console.log(err);
-  });
+  .catch((err) => console.log(err));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
