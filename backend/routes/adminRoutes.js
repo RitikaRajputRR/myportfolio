@@ -1,11 +1,13 @@
-
 const express = require("express");
 const router = express.Router();
 
 const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "mysecretkey";
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// ================= Register =================
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -31,13 +33,14 @@ router.post("/register", async (req, res) => {
     res.status(201).json({
       message: "Admin Registered Successfully",
     });
-
   } catch (error) {
     res.status(500).json({
       message: error.message,
     });
   }
 });
+
+// ================= Login =================
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -63,11 +66,12 @@ router.post("/login", async (req, res) => {
       JWT_SECRET,
       { expiresIn: "1d" }
     );
-res.status(200).json({
-  message: "Login Successful",
-  token,
-  username: admin.username,
-});
+
+    res.status(200).json({
+      message: "Login Successful",
+      token,
+      username: admin.username,
+    });
 
   } catch (error) {
     res.status(500).json({
@@ -75,6 +79,7 @@ res.status(200).json({
     });
   }
 });
+
 // ================= Get All Admins =================
 router.get("/", async (req, res) => {
   try {
@@ -88,7 +93,8 @@ router.get("/", async (req, res) => {
     });
   }
 });
-// Get Single Admin
+
+// ================= Get Single Admin =================
 router.get("/:id", async (req, res) => {
   try {
     const admin = await Admin.findById(req.params.id).select("-password");
@@ -100,13 +106,15 @@ router.get("/:id", async (req, res) => {
     }
 
     res.json(admin);
+
   } catch (error) {
     res.status(500).json({
       message: error.message,
     });
   }
 });
-// Update Admin
+
+// ================= Update Admin =================
 router.put("/:id", async (req, res) => {
   try {
     const { username, email } = req.body;
@@ -138,44 +146,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-const updateAdmin = async () => {
-  try {
-    const res = await fetch(
-      `http://localhost:5000/admin/${editingAdmin}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          email,
-        }),
-      }
-    );
-
-    const data = await res.json();
-
-    if (res.ok) {
-      toast.success(data.message);
-
-      const response = await fetch("http://localhost:5000/admin");
-      const updatedAdmins = await response.json();
-      setAdmins(updatedAdmins);
-
-      setEditingAdmin(null);
-      setUsername("");
-      setEmail("");
-    } else {
-      toast.error(data.message);
-    }
-  } catch (error) {
-    console.log(error);
-    toast.error("Something went wrong");
-  }
-};
-
-// Delete Admin
+// ================= Delete Admin =================
 router.delete("/:id", async (req, res) => {
   try {
     const admin = await Admin.findByIdAndDelete(req.params.id);
@@ -196,4 +167,5 @@ router.delete("/:id", async (req, res) => {
     });
   }
 });
+
 module.exports = router;
