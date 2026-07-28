@@ -33,14 +33,14 @@ useEffect(() => {
 
   // Fetch Contacts
   useEffect(() => {
-    fetch("http://localhost:5000/contact")
+    fetch("https://myportfolio-backend-awfq.onrender.com/contact")
       .then((res) => res.json())
       .then((data) => setContacts(data))
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
-  fetch("http://localhost:5000/admin")
+  fetch("https://myportfolio-backend-awfq.onrender.com/admin")
     .then((res) => res.json())
     .then((data) => setAdmins(data))
     .catch((err) => console.log(err));
@@ -65,7 +65,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/contact/${id}`,
+        `https://myportfolio-backend-awfq.onrender.com/contact/${id}`,
         {
           method: "DELETE",
         }
@@ -76,7 +76,7 @@ useEffect(() => {
       if (response.ok) {
         toast.success("Contact deleted successfully!");
 
-        const res = await fetch("http://localhost:5000/contact");
+        const res = await fetch("https://myportfolio-backend-awfq.onrender.com/contact");
         const updatedContacts = await res.json();
         setContacts(updatedContacts);
       } else {
@@ -114,7 +114,7 @@ const deleteAdmin = async (id) => {
 
   if (!result.isConfirmed) return;
 
-  const res = await fetch(`http://localhost:5000/admin/${id}`, {
+  const res = await fetch(`https://myportfolio-backend-awfq.onrender.com/admin/${id}`, {
     method: "DELETE",
   });
 
@@ -130,8 +130,7 @@ const deleteAdmin = async (id) => {
 };
 const updateAdmin = async () => {
   try {
-    const res = await fetch(
-      `http://localhost:5000/admin/${editingAdmin}`,
+    const res = await fetch(`https://myportfolio-backend-awfq.onrender.com/admin/${editingAdmin}`,
       {
         method: "PUT",
         headers: {
@@ -149,7 +148,7 @@ const updateAdmin = async () => {
     if (res.ok) {
       toast.success(data.message);
 
-      const response = await fetch("http://localhost:5000/admin");
+      const response = await fetch("https://myportfolio-backend-awfq.onrender.com/admin");
       const admins = await response.json();
       setAdmins(admins);
 

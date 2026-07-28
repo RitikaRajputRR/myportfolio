@@ -12,7 +12,7 @@ const handleRegister = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await fetch("http://localhost:5000/admin/register", {
+    const response = awaitfetch("https://myportfolio-backend-awfq.onrender.com/admin/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
